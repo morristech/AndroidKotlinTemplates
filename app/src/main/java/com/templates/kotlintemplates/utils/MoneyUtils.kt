@@ -18,69 +18,72 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.templates.kotlintemplates.utils;
+package com.templates.kotlintemplates.utils
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.Locale
 
 /**
  * Utility class for performing various formatting operations on money.
- *
+
  * @author vgrec, created on 6/15/15.
  */
-public class MoneyUtils {
+object MoneyUtils {
 
     /**
      * Given an amount of cents, converts it to a decimal number and returns the String representation of it.
      * The default representation is 2 digits after decimal point.
-     *
+
      * @param amount amount of money in cents
+     * *
      * @return String representation of the decimal number
-     * <p/>
-     * eg.: centsToString(100) => "1.00"
+     * *
+     *
+     *
+     * * eg.: centsToString(100) => "1.00"
      */
-    public static String centsToString(long amount) {
-        return doubleToString(fromCents(amount), 2);
+    fun centsToString(amount: Long): String {
+        return doubleToString(fromCents(amount), 2)
     }
 
     /**
      * Given an amount of cents, converts it to a decimal number and returns the String representation of it.
-     *
+
      * @param amount amount of money in cents
+     * *
      * @param digits number of digits after decimal point
+     * *
      * @return String representation of the decimal number
-     * <p/>
-     * eg.: centsToString(100, 3) => "1.000"
+     * *
+     *
+     *
+     * * eg.: centsToString(100, 3) => "1.000"
      */
-    public static String centsToString(long amount, int digits) {
-        return doubleToString(fromCents(amount), digits);
+    fun centsToString(amount: Long, digits: Int): String {
+        return doubleToString(fromCents(amount), digits)
     }
 
-    private static double fromCents(long amount) {
-        return amount / 100.0;
+    private fun fromCents(amount: Long): Double {
+        return amount / 100.0
     }
 
-    private static String doubleToString(double money, int digits) {
-        return doubleToString(money, digits, null);
-    }
-
-    private static String doubleToString(double money, int digits, RoundingMode mode) {
-        NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
-        if (format instanceof DecimalFormat) {
-            ((DecimalFormat) format).setDecimalSeparatorAlwaysShown(true);
+    private fun doubleToString(money: Double, digits: Int, mode: RoundingMode? = null): String {
+        val format = NumberFormat.getInstance(Locale.getDefault())
+        if (format is DecimalFormat) {
+            format.isDecimalSeparatorAlwaysShown = true
         }
-        format.setMinimumFractionDigits(digits);
-        format.setMaximumFractionDigits(digits);
+        format.minimumFractionDigits = digits
+        format.maximumFractionDigits = digits
         if (mode != null) {
-            format.setRoundingMode(mode);
+            format.roundingMode = mode
         }
-        return format.format(money);
+        return format.format(money)
     }
 
-    public static int stringToCents(String price) {
-        return new BigDecimal(price).multiply(new BigDecimal("100.00")).intValue();
+    fun stringToCents(price: String): Int {
+        return BigDecimal(price).multiply(BigDecimal("100.00")).toInt()
     }
 }
