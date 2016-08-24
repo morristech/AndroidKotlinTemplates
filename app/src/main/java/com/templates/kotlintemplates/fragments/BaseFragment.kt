@@ -15,13 +15,13 @@ import android.widget.Toast
 
 abstract class BaseFragment : DebugFragment() {
 
-    protected abstract val layoutResource: Int
-    protected abstract var fragmentView: View?
+    protected abstract val rootLayout: Int
+    protected abstract var rootView: View?
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        fragmentView = inflater?.inflate(layoutResource, container, false)
-        return fragmentView
+        rootView = inflater?.inflate(rootLayout, container, false)
+        return rootView
     }
 
     override fun getContext(): Context {
